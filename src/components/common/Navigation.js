@@ -1,10 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useMatch } from 'react-router-dom';
 import logo from '../../images/logo.png';
 
 const Navigation = () => {
     const projects = useMatch('/projects');
     const teams = useMatch('/teams');
+
+    const {user} = useSelector(state => state.auth) || {};
 
     return (
         <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
@@ -38,7 +41,7 @@ const Navigation = () => {
             </div>
             <button className="flex items-center justify-center w-8 h-8 ml-auto overflow-hidden rounded-full cursor-pointer">
                 <img
-                    src="https://assets.codepen.io/5041378/internal/avatars/users/default.png?fit=crop&format=auto&height=512&version=1600304177&width=512"
+                    src={user?.avatar}
                     alt="User avatar"
                 />
             </button>

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
 import { useLoginMutation } from '../features/auth/authApi';
 import logo from '../images/logo.png';
 
@@ -9,20 +8,12 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     // auth api
-    const [login, { isError, isSuccess, data }] = useLoginMutation();
-
-    // const navigate = useNavigate();
+    const [login] = useLoginMutation();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         login({ email, password });
     };
-
-    // useEffect(() => {
-    //     if(isSuccess) {
-    //         navigate('/')
-    //     }
-    // }, [isSuccess, navigate])
 
     return (
         <div className="grid place-items-center h-screen bg-[#F9FAFB]">

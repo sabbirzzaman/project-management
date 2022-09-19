@@ -1,11 +1,11 @@
 import React from 'react';
 import Layout from '../components/base/Layout';
-import TeamsItems from '../components/Teams/TeamsItems';
+import TeamsBody from '../components/Teams/TeamsBody';
 
 const Teams = () => {
     return (
         <Layout>
-            <TeamsItems />
+            <TeamsBody />
         </Layout>
     );
 };
