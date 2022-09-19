@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useAddTeamsMutation } from '../../features/teams/teamsApi';
 
@@ -25,9 +25,11 @@ const TeamCardModal = ({ setIsOpen }) => {
         });
     };
 
-    if (isSuccess) {
-        setIsOpen(false);
-    }
+    useEffect(() => {
+        if (isSuccess) {
+            setIsOpen(false);
+        }
+    }, [isSuccess, setIsOpen]);
 
     return (
         <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10">

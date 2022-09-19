@@ -64,9 +64,11 @@ const TeamCardModal = ({ id, setIsOpen }) => {
         setEmail('')
     };
 
-    if(isSuccess) {
-        setIsOpen(false)
-    }
+    useEffect(() => {
+        if (isSuccess) {
+            setIsOpen(false);
+        }
+    }, [isSuccess, setIsOpen]);
 
     return (
         <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10">

@@ -12,16 +12,28 @@ export const teamsApi = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: data,
             }),
-            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+            async onQueryStarted({ email }, { queryFulfilled, dispatch }) {
                 try {
                     const { data } = (await queryFulfilled) || {};
-
                     const { id, email } = data || {};
 
                     if (id) {
                         dispatch(
-                            membersApi.endpoints.addMember.initiate({teamId: id, email})
-                        )
+                            membersApi.endpoints.addMember.initiate({
+                                teamId: id,
+                                email,
+                            })
+                        );
+
+                        await dispatch(
+                            apiSlice.util.updateQueryData(
+                                'getTeams',
+                                email,
+                                (draft) => {
+                                    draft.push(data);
+                                }
+                            )
+                        );
                     }
                 } catch (err) {}
             },

@@ -7,7 +7,7 @@ const Navigation = () => {
     const projects = useMatch('/projects');
     const teams = useMatch('/teams');
 
-    const {user} = useSelector(state => state.auth) || {};
+    const { user } = useSelector((state) => state.auth) || {};
 
     return (
         <div className="flex items-center flex-shrink-0 w-full h-16 px-10 bg-white bg-opacity-75">
@@ -40,10 +40,7 @@ const Navigation = () => {
                 </Link>
             </div>
             <button className="flex items-center justify-center w-8 h-8 ml-auto overflow-hidden rounded-full cursor-pointer">
-                <img
-                    src={user?.avatar}
-                    alt="User avatar"
-                />
+                <img src={user?.avatar} alt="User avatar" />
             </button>
         </div>
     );
