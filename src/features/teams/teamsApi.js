@@ -5,7 +5,14 @@ export const teamsApi = apiSlice.injectEndpoints({
         getTeams: builder.query({
             query: (email) => `/teams?email_like=${email}`,
         }),
+        addTeams: builder.mutation({
+            query: (data) => ({
+                url: '/teams',
+                method: 'POST',
+                body: data,
+            })
+        })
     }),
 });
 
-export const { useGetTeamsQuery } = teamsApi;
+export const { useGetTeamsQuery, useAddTeamsMutation } = teamsApi;
