@@ -4,7 +4,7 @@ import { membersApi } from '../members/membersApi';
 export const teamsApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getTeams: builder.query({
-            query: (email) => `/teams?email_like=${email}`,
+            query: (email) => `/teams`,
         }),
         addTeams: builder.mutation({
             query: (data) => ({

@@ -2,8 +2,12 @@ import { apiSlice } from '../api/apiSlice';
 
 export const membersApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        getMembers: builder.query({
+            query: (email) => `/members?email=${email}`,
+        }),
         getMember: builder.query({
-            query: ({teamId, email}) => `/members?teamId_like=${teamId}&email=${email}`,
+            query: ({ teamId, email }) =>
+                `/members?teamId_like=${teamId}&email=${email}`,
         }),
         addMember: builder.mutation({
             query: (data) => ({
@@ -15,4 +19,5 @@ export const membersApi = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useAddMemberMutation, useGetMemberQuery } = membersApi;
+export const { useGetMembersQuery, useAddMemberMutation, useGetMemberQuery } =
+    membersApi;

@@ -1,5 +1,13 @@
 import { apiSlice } from '../api/apiSlice';
 
 export const projectsApi = apiSlice.injectEndpoints({
-    endpoints: (builder) => ({}),
+    endpoints: (builder) => ({
+        addProject: builder.mutation({
+            query: (data) => ({
+                url: '/projects',
+                method: 'POST',
+                body: data,
+            })
+        })
+    }),
 });
