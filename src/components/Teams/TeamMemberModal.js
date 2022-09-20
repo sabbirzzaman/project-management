@@ -1,41 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import {
-    useAddMemberMutation,
-    useGetMemberQuery,
-} from '../../features/members/membersApi';
+import { useAddTeamMemberMutation } from '../../features/teams/teamsApi';
 import { useGetUserQuery } from '../../features/users/usersApi';
+import toast from 'react-hot-toast';
 import isValidEmail from '../../utils/isValidEmail';
 import Error from '../common/Error';
 
-const TeamCardModal = ({ id, setIsOpen }) => {
+const TeamCardModal = ({ id, members, setIsOpen }) => {
     // local state
     const [email, setEmail] = useState('');
-    const [skipUserReq, setSkipUserReq] = useState(true);
-    const [skipMemberReq, setSkipMemberReq] = useState(true);
+    const [skipReq, setSkipReq] = useState(true);
     const [disabled, setDisabled] = useState(true);
 
-    const { data: user } = useGetUserQuery(email, { skip: skipUserReq });
+    const { data: user } = useGetUserQuery(email, { skip: skipReq });
+    const [addTeamMember, { isLoading, isSuccess }] =
+        useAddTeamMemberMutation();
 
-    const { data: member } = useGetMemberQuery(
-        { teamId: id, email },
-        { skip: skipMemberReq }
-    );
-
-    const [addMember, { isLoading, isSuccess }] = useAddMemberMutation();
+    const existingMember = members.filter((member) => member.email === email);
 
     useEffect(() => {
-        if (user?.length > 0) {
-            setSkipMemberReq(false);
-        }
-    }, [user]);
-
-    useEffect(() => {
-        if (user?.length > 0 && member?.length === 0) {
+        if (user?.length > 0 && existingMember?.length === 0) {
             setDisabled(false);
         } else {
-            setDisabled(true)
+            setDisabled(true);
         }
-    }, [user, member]);
+    }, [user, existingMember]);
 
     const debounceHandler = (fn, delay) => {
         let timeoutId;
@@ -51,7 +39,7 @@ const TeamCardModal = ({ id, setIsOpen }) => {
     const doSearch = (value) => {
         if (isValidEmail(value)) {
             setEmail(value);
-            setSkipUserReq(false);
+            setSkipReq(false);
         }
     };
 
@@ -60,15 +48,15 @@ const TeamCardModal = ({ id, setIsOpen }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        addMember({ email, teamId: id });
-        setEmail('')
+        addTeamMember({ id, data: { members: [...members, ...user] } })
     };
 
     useEffect(() => {
-        if (isSuccess) {
-            setIsOpen(false);
+        if(isSuccess) {
+            setIsOpen(false)
+            toast.success('Member added successfully!');
         }
-    }, [isSuccess, setIsOpen]);
+    }, [isSuccess, setIsOpen])
 
     return (
         <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10">
@@ -110,7 +98,7 @@ const TeamCardModal = ({ id, setIsOpen }) => {
                         </button>
                     </div>
 
-                    {member?.length > 0 && (
+                    {existingMember?.length > 0 && (
                         <Error message={'Member already exist in the team!'} />
                     )}
 

@@ -22,6 +22,7 @@ const TeamCardModal = ({ setIsOpen }) => {
             color,
             email,
             date: Date.now(),
+            members: [user],
         });
     };
 

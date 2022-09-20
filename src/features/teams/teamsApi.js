@@ -1,10 +1,9 @@
 import { apiSlice } from '../api/apiSlice';
-import { membersApi } from '../members/membersApi';
 
 export const teamsApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getTeams: builder.query({
-            query: (email) => `/teams`,
+            query: (email) => `/teams?q=${email}`,
         }),
         addTeams: builder.mutation({
             query: (data) => ({
@@ -12,20 +11,13 @@ export const teamsApi = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: data,
             }),
-            async onQueryStarted({ email }, { queryFulfilled, dispatch }) {
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 try {
                     const { data } = (await queryFulfilled) || {};
                     const { id, email } = data || {};
 
                     if (id) {
                         dispatch(
-                            membersApi.endpoints.addMember.initiate({
-                                teamId: id,
-                                email,
-                            })
-                        );
-
-                        await dispatch(
                             apiSlice.util.updateQueryData(
                                 'getTeams',
                                 email,
@@ -38,7 +30,18 @@ export const teamsApi = apiSlice.injectEndpoints({
                 } catch (err) {}
             },
         }),
+        addTeamMember: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `/teams/${id}`,
+                method: 'PATCH',
+                body: data,
+            }),
+        }),
     }),
 });
 
-export const { useGetTeamsQuery, useAddTeamsMutation } = teamsApi;
+export const {
+    useGetTeamsQuery,
+    useAddTeamsMutation,
+    useAddTeamMemberMutation,
+} = teamsApi;

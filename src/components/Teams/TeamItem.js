@@ -1,10 +1,28 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import TeamMemberModal from './TeamMemberModal'
+import TeamMemberModal from './TeamMemberModal';
 
 const TeamItem = ({ team }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const { id, name, title, color, date } = team || {};
+    const { id, name, title, color, date, members } = team || {};
+
+    // manage colors
+    let teamColor = '';
+    if (color === 'red') {
+        teamColor = 'text-red-600 bg-red-100';
+    } else if (color === 'green') {
+        teamColor = 'text-green-600 bg-green-100';
+    } else if (color === 'yellow') {
+        teamColor = 'text-yellow-600 bg-yellow-100';
+    } else if (color === 'violet') {
+        teamColor = 'text-violet-600 bg-violet-100';
+    } else if (color === 'pink') {
+        teamColor = 'text-pink-600 bg-pink-100';
+    } else if (color === 'orange') {
+        teamColor = 'text-orange-600 bg-orange-100';
+    } else if (color === 'teal') {
+        teamColor = 'text-teal-600 bg-teal-100';
+    }
 
     return (
         <div
@@ -25,12 +43,12 @@ const TeamItem = ({ team }) => {
                 </svg>
             </button>
             <span
-                className={`flex items-center h-6 px-3 text-xs font-semibold text-${color}-600 bg-${color}-100 rounded-full`}
+                className={`flex items-center h-6 px-3 text-xs font-semibold ${teamColor} rounded-full`}
             >
                 {name}
             </span>
             <h4 className="mt-3 text-sm font-medium">{title}</h4>
-            <div className="flex items-center w-full mt-3 text-xs font-medium text-gray-400">
+            <div className="flex items-center justify-between w-full mt-3 text-xs font-medium text-gray-400">
                 <div className="flex items-center">
                     <svg
                         className="w-4 h-4 text-gray-300 fill-current"
@@ -48,10 +66,24 @@ const TeamItem = ({ team }) => {
                         {moment(date).format('MMM D')}
                     </span>
                 </div>
+
+                <div className="avatar-group -space-x-3">
+                    {members.map((member) => (
+                        <div key={member.id} className="avatar border-none">
+                            <div className="w-7">
+                                <img src={member.avatar} alt={member.name} />
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
-            {
-                isOpen && <TeamMemberModal id={id} setIsOpen={setIsOpen} />
-            }
+            {isOpen && (
+                <TeamMemberModal
+                    id={id}
+                    members={members}
+                    setIsOpen={setIsOpen}
+                />
+            )}
         </div>
     );
 };
