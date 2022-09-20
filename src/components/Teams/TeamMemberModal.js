@@ -59,12 +59,12 @@ const TeamCardModal = ({ id, members, setIsOpen }) => {
     }, [isSuccess, setIsOpen])
 
     return (
-        <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10">
+        <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10 cursor-default">
             <div
                 onClick={() => setIsOpen(false)}
                 className="absolute w-full h-full bg-slate-900 bg-opacity-60"
             ></div>
-            <div className="bg-white w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10 cursor-default">
+            <div className="bg-white w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
                     Add team member!
                 </h3>

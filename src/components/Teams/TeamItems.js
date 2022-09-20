@@ -9,7 +9,7 @@ const TeamItems = () => {
         data: teams,
         isLoading: isTeamsLoad,
         isError: isTeamsError,
-    } = useGetTeamsQuery(user?.email);
+    } = useGetTeamsQuery(user?.email, {refetchOnMountOrArgChange: true});
 
     // manage content
     let content;

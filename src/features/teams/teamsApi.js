@@ -36,6 +36,23 @@ export const teamsApi = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: data,
             }),
+            async onQueryStarted({ id, data }, { queryFulfilled, dispatch }) {
+                try {
+                    const { data } = (await queryFulfilled) || {};
+                    const { email } = data || {};
+
+                    dispatch(
+                        apiSlice.util.updateQueryData(
+                            'getTeams',
+                            email,
+                            (draft) => {
+                                const team = draft.find((t) => t.id == id);
+                                team.members = data.members;
+                            }
+                        )
+                    );
+                } catch (err) {}
+            },
         }),
     }),
 });
