@@ -1,83 +1,106 @@
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { useAddTeamsMutation } from '../../features/teams/teamsApi';
+import { useAddProjectMutation } from '../../features/projects/projectsApi';
+import { useGetTeamQuery } from '../../features/teams/teamsApi';
+import Error from '../common/Error';
 
-const TeamCardModal = ({ setIsOpen }) => {
-    // local state
+const AddProjectModal = ({ setModalOpen }) => {
     const [team, setTeam] = useState('');
     const [title, setTitle] = useState('');
-    const [color, setColor] = useState('red');
+    const [skipReq, setSkipReq] = useState(true);
+    const [disabled, setDisabled] = useState(true);
 
-    // user
     const { user } = useSelector((state) => state.auth) || {};
-    const { email } = user || {};
+    const { email, avatar } = user || {};
 
-    const [addTeams, { isSuccess, isLoading }] = useAddTeamsMutation();
+    const { data: teams } = useGetTeamQuery(
+        { email, team: team.toLowerCase() },
+        { skip: skipReq }
+    );
+
+    const [addProject, { isLoading, isSuccess }] = useAddProjectMutation();
+
+    useEffect(() => {
+        if (teams?.length > 0 && title?.length > 0) {
+            setDisabled(false);
+        } else if (teams?.length === 0 || title?.length === 0) {
+            setDisabled(true);
+        }
+    }, [teams, title]);
+
+    const debounceHandler = (fn, delay) => {
+        let timeoutId;
+        return (...arg) => {
+            clearTimeout(timeoutId);
+
+            timeoutId = setTimeout(() => {
+                fn(...arg);
+            }, delay);
+        };
+    };
+
+    const doSearch = (value) => {
+        if (value.length > 0) {
+            setTeam(value);
+            setSkipReq(false);
+        }
+    };
+
+    const handleSearch = debounceHandler(doSearch, 500);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addTeams({
+
+        addProject({
             team: team.toLowerCase(),
+            status: 'backlog',
             title,
-            color,
             email,
+            avatar,
             date: Date.now(),
-            members: [user],
         });
     };
 
     useEffect(() => {
-        if (isSuccess) {
-            setIsOpen(false);
-            toast.success('Team added successfully!')
+        if(isSuccess) {
+            setModalOpen(false)
+            toast.success('Project added successfully!');
         }
-    }, [isSuccess, setIsOpen]);
+    }, [isSuccess, setModalOpen])
 
     return (
         <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10">
             <div
-                onClick={() => setIsOpen(false)}
+                onClick={() => setModalOpen(false)}
                 className="absolute w-full h-full bg-slate-900 bg-opacity-60"
             ></div>
             <div className="bg-white w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
                 <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
-                    Add new team!
+                    Add new project!
                 </h3>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <input type="hidden" name="remember" value="true" />
                     <div className="rounded-md shadow-sm -space-y-px">
-                        <div className="flex">
+                        <div className="relative">
+                            <label htmlFor="team-name" className="sr-only">
+                                Team name
+                            </label>
                             <input
                                 id="team-name"
-                                name="team"
+                                name="name"
                                 type="text"
                                 autoComplete="team-name"
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-tl-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                                 placeholder="Team name"
-                                value={team}
-                                onChange={(e) => setTeam(e.target.value)}
+                                onChange={(e) => handleSearch(e.target.value)}
                             />
-                            <select
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-tr-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
-                                onChange={(e) => setColor(e.target.value)}
-                            >
-                                <option value="red" defaultValue>
-                                    Red
-                                </option>
-                                <option value="green">Green</option>
-                                <option value="yellow">Yellow</option>
-                                <option value="violet">Violet</option>
-                                <option value="pink">Pink</option>
-                                <option value="orange">Orange</option>
-                                <option value="teal">Teal</option>
-                            </select>
                         </div>
                         <div>
                             <label htmlFor="team-title" className="sr-only">
                                 Team title
-                            </label>
+                            </label>g
                             <input
                                 id="team-title"
                                 name="title"
@@ -96,15 +119,23 @@ const TeamCardModal = ({ setIsOpen }) => {
                         <button
                             type="submit"
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-gray-300"
-                            disabled={isLoading}
+                            disabled={disabled || isLoading}
                         >
-                            Add team
+                            Add project
                         </button>
                     </div>
+
+                    {teams?.length === 0 && (
+                        <Error
+                            message={
+                                'You are not assigned or team not founded!'
+                            }
+                        />
+                    )}
                 </form>
             </div>
         </div>
     );
 };
 
-export default TeamCardModal;
+export default AddProjectModal;

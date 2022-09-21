@@ -5,6 +5,9 @@ export const teamsApi = apiSlice.injectEndpoints({
         getTeams: builder.query({
             query: (email) => `/teams?q=${email}`,
         }),
+        getTeam: builder.query({
+            query: ({email, team}) => `/teams?q=${email}&team=${team}`,
+        }),
         addTeams: builder.mutation({
             query: (data) => ({
                 url: '/teams',
@@ -36,7 +39,7 @@ export const teamsApi = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: data,
             }),
-            async onQueryStarted({ id, data }, { queryFulfilled, dispatch }) {
+            async onQueryStarted({ id }, { queryFulfilled, dispatch }) {
                 try {
                     const { data } = (await queryFulfilled) || {};
                     const { email } = data || {};
@@ -46,7 +49,7 @@ export const teamsApi = apiSlice.injectEndpoints({
                             'getTeams',
                             email,
                             (draft) => {
-                                const team = draft.find((t) => t.id == id);
+                                const team = draft.find((t) => Number(t.id) === Number(id));
                                 team.members = data.members;
                             }
                         )
@@ -59,6 +62,7 @@ export const teamsApi = apiSlice.injectEndpoints({
 
 export const {
     useGetTeamsQuery,
+    useGetTeamQuery,
     useAddTeamsMutation,
     useAddTeamMemberMutation,
 } = teamsApi;

@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import AddProjectModal from './AddProjectModal';
 
 const ProjectStatus = ({ title, item, addBtn }) => {
+    const [modalOpen, setModalOpen] = useState(false);
+
     return (
         <div className="flex items-center flex-shrink-0 h-10 px-2">
             <span className="block text-sm font-semibold">{title}</span>
@@ -8,7 +11,10 @@ const ProjectStatus = ({ title, item, addBtn }) => {
                 {item}
             </span>
             {addBtn && (
-                <button className="flex items-center justify-center w-6 h-6 ml-auto text-indigo-500 rounded hover:bg-indigo-500 hover:text-indigo-100">
+                <button
+                    onClick={() => setModalOpen(true)}
+                    className="flex items-center justify-center w-6 h-6 ml-auto text-indigo-500 rounded hover:bg-indigo-500 hover:text-indigo-100"
+                >
                     <svg
                         className="w-5 h-5"
                         fill="none"
@@ -24,6 +30,7 @@ const ProjectStatus = ({ title, item, addBtn }) => {
                     </svg>
                 </button>
             )}
+            {modalOpen && <AddProjectModal setModalOpen={setModalOpen} />}
         </div>
     );
 };

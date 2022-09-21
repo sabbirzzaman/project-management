@@ -7,7 +7,9 @@ export const projectsApi = apiSlice.injectEndpoints({
                 url: '/projects',
                 method: 'POST',
                 body: data,
-            })
-        })
+            }),
+        }),
     }),
 });
+
+export const { useAddProjectMutation } = projectsApi;
