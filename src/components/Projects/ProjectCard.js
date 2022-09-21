@@ -1,6 +1,27 @@
+import moment from 'moment';
 import React from 'react';
 
-const ProjectCard = () => {
+const ProjectCard = ({project}) => {
+    const {avatar, date, color, team, title} = project || {};
+
+    // manage colors
+    let teamColor = '';
+    if (color === 'red') {
+        teamColor = 'text-red-600 bg-red-100';
+    } else if (color === 'green') {
+        teamColor = 'text-green-600 bg-green-100';
+    } else if (color === 'yellow') {
+        teamColor = 'text-yellow-600 bg-yellow-100';
+    } else if (color === 'violet') {
+        teamColor = 'text-violet-600 bg-violet-100';
+    } else if (color === 'pink') {
+        teamColor = 'text-pink-600 bg-pink-100';
+    } else if (color === 'orange') {
+        teamColor = 'text-orange-600 bg-orange-100';
+    } else if (color === 'teal') {
+        teamColor = 'text-teal-600 bg-teal-100';
+    }
+
     return (
         <div
             className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
@@ -16,12 +37,11 @@ const ProjectCard = () => {
                     <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                 </svg>
             </button>
-            <span className="flex items-center h-6 px-3 text-xs font-semibold text-pink-500 bg-pink-100 rounded-full">
-                Design
+            <span className={`flex items-center h-6 px-3 text-xs font-semibold ${teamColor} rounded-full`}>
+                {team.toUpperCase()}
             </span>
             <h4 className="mt-3 text-sm font-medium">
-                This is the title of the card for the thing that needs to be
-                done.
+                {title}
             </h4>
             <div className="flex items-center w-full mt-3 text-xs font-medium text-gray-400">
                 <div className="flex items-center">
@@ -37,12 +57,12 @@ const ProjectCard = () => {
                             clipRule="evenodd"
                         />
                     </svg>
-                    <span className="ml-1 leading-none">Dec 12</span>
+                    <span className="ml-1 leading-none">{moment(date).format('MMM DD')}</span>
                 </div>
 
                 <img
                     className="w-6 h-6 ml-auto rounded-full"
-                    src="https://randomuser.me/api/portraits/women/26.jpg"
+                    src={avatar}
                     alt="user"
                 />
             </div>

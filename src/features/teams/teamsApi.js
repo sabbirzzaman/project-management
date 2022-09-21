@@ -2,6 +2,9 @@ import { apiSlice } from '../api/apiSlice';
 
 export const teamsApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
+        getAllTeams: builder.query({
+            query: ({team}) => `/teams?team=${team}`,
+        }),
         getTeams: builder.query({
             query: (email) => `/teams?q=${email}`,
         }),
@@ -61,6 +64,7 @@ export const teamsApi = apiSlice.injectEndpoints({
 });
 
 export const {
+    useGetAllTeamsQuery,
     useGetTeamsQuery,
     useGetTeamQuery,
     useAddTeamsMutation,

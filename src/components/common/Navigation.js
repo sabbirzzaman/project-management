@@ -27,7 +27,7 @@ const Navigation = () => {
                         }`}
                         to="/teams"
                     >
-                        Team
+                        Teams
                     </Link>
                     <Link
                         className={`mx-2 text-sm font-semibold hover:text-indigo-700 ${

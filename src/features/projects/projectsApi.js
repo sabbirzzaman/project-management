@@ -9,7 +9,10 @@ export const projectsApi = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
+        getProjects: builder.query({
+            query: () => `/projects`
+        }),
     }),
 });
 
-export const { useAddProjectMutation } = projectsApi;
+export const { useAddProjectMutation, useGetProjectsQuery } = projectsApi;

@@ -4,7 +4,7 @@ import TeamMemberModal from './TeamMemberModal';
 
 const TeamItem = ({ team }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const { id, name, title, color, date, members } = team || {};
+    const { id, team: teamName, title, color, date, members } = team || {};
 
     // manage colors
     let teamColor = '';
@@ -45,7 +45,7 @@ const TeamItem = ({ team }) => {
             <span
                 className={`flex items-center h-6 px-3 text-xs font-semibold ${teamColor} rounded-full`}
             >
-                {name}
+                {teamName.toUpperCase()}
             </span>
             <h4 className="mt-3 text-sm font-medium">{title}</h4>
             <div className="flex items-center justify-between w-full mt-3 text-xs font-medium text-gray-400">
@@ -63,14 +63,14 @@ const TeamItem = ({ team }) => {
                         />
                     </svg>
                     <span className="ml-1 leading-none">
-                        {moment(date).format('MMM D')}
+                        {moment(date).format('MMM DD')}
                     </span>
                 </div>
 
-                <div className="avatar-group -space-x-3">
+                <div className="avatar-group -space-x-2">
                     {members.map((member) => (
                         <div key={member.id} className="avatar border-none">
-                            <div className="w-7">
+                            <div className="w-6">
                                 <img src={member.avatar} alt={member.name} />
                             </div>
                         </div>

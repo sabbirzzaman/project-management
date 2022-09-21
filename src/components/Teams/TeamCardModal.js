@@ -1,19 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { useAddTeamsMutation } from '../../features/teams/teamsApi';
+import {
+    useAddTeamsMutation,
+    useGetAllTeamsQuery,
+} from '../../features/teams/teamsApi';
+import Error from '../common/Error';
 
 const TeamCardModal = ({ setIsOpen }) => {
     // local state
     const [team, setTeam] = useState('');
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('red');
+    const [skipReq, setSkipReq] = useState(true);
+    const [disabled, setDisabled] = useState(true);
 
     // user
     const { user } = useSelector((state) => state.auth) || {};
     const { email } = user || {};
 
+    const { data: teams } = useGetAllTeamsQuery(
+        { team: team.toLowerCase() },
+        { skip: skipReq }
+    );
+
     const [addTeams, { isSuccess, isLoading }] = useAddTeamsMutation();
+
+    useEffect(() => {
+        if (teams?.length === 0 && title?.length > 0) {
+            setDisabled(false);
+        } else if (teams?.length > 0 || title?.length === 0) {
+            setDisabled(true);
+        }
+    }, [teams, title]);
+
+    const debounceHandler = (fn, delay) => {
+        let timeoutId;
+        return (...arg) => {
+            clearTimeout(timeoutId);
+
+            timeoutId = setTimeout(() => {
+                fn(...arg);
+            }, delay);
+        };
+    };
+
+    const doSearch = (value) => {
+        if (value.length > 0) {
+            setTeam(value);
+            setSkipReq(false);
+        }
+    };
+
+    const handleSearch = debounceHandler(doSearch, 500);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -30,7 +69,7 @@ const TeamCardModal = ({ setIsOpen }) => {
     useEffect(() => {
         if (isSuccess) {
             setIsOpen(false);
-            toast.success('Team added successfully!')
+            toast.success('Team added successfully!');
         }
     }, [isSuccess, setIsOpen]);
 
@@ -56,8 +95,7 @@ const TeamCardModal = ({ setIsOpen }) => {
                                 required
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-tl-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                                 placeholder="Team name"
-                                value={team}
-                                onChange={(e) => setTeam(e.target.value)}
+                                onChange={(e) => handleSearch(e.target.value)}
                             />
                             <select
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-tr-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
@@ -96,11 +134,17 @@ const TeamCardModal = ({ setIsOpen }) => {
                         <button
                             type="submit"
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-gray-300"
-                            disabled={isLoading}
+                            disabled={disabled || isLoading}
                         >
                             Add team
                         </button>
                     </div>
+
+                    {teams?.length > 0 && (
+                        <Error
+                            message={'Team already exist! Try another name.'}
+                        />
+                    )}
                 </form>
             </div>
         </div>

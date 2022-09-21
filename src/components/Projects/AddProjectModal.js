@@ -53,8 +53,9 @@ const AddProjectModal = ({ setModalOpen }) => {
         e.preventDefault();
 
         addProject({
-            team: team.toLowerCase(),
+            team: teams[0].team,
             status: 'backlog',
+            color: teams[0].color,
             title,
             email,
             avatar,
@@ -63,11 +64,11 @@ const AddProjectModal = ({ setModalOpen }) => {
     };
 
     useEffect(() => {
-        if(isSuccess) {
-            setModalOpen(false)
+        if (isSuccess) {
+            setModalOpen(false);
             toast.success('Project added successfully!');
         }
-    }, [isSuccess, setModalOpen])
+    }, [isSuccess, setModalOpen]);
 
     return (
         <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10">
@@ -100,7 +101,7 @@ const AddProjectModal = ({ setModalOpen }) => {
                         <div>
                             <label htmlFor="team-title" className="sr-only">
                                 Team title
-                            </label>g
+                            </label>
                             <input
                                 id="team-title"
                                 name="title"
