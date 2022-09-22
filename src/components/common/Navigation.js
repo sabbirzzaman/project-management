@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useMatch } from 'react-router-dom';
 import { userLoggedOut } from '../../features/auth/authSlice';
 import logo from '../../images/logo.png';
@@ -9,9 +9,11 @@ const Navigation = () => {
     const teams = useMatch('/teams');
 
     const { user } = useSelector((state) => state.auth) || {};
+    const { name, avatar } = user || {};
+    const dispatch = useDispatch();
 
     const handleLogout = () => {
-        userLoggedOut();
+        dispatch(userLoggedOut());
         localStorage.clear();
     };
 
@@ -48,16 +50,29 @@ const Navigation = () => {
                 )}
             </div>
 
-            <div className="flex items-center gap-8">
-                <button
-                    onClick={handleLogout}
-                    className="bg-violet-600 hover:bg-violet-700 transition delay-100 font-semibold text-sm text-violet-100 px-7 py-1 rounded-lg "
+            <div className="dropdown dropdown-end">
+                <label
+                    tabIndex="0"
+                    className="btn btn-ghost rounded-lg px-3 w-full gap-3 btn-circle avatar hover:bg-gray-200"
                 >
-                    Logout
-                </button>
-                <button className="flex items-center justify-center w-8 h-8 ml-auto overflow-hidden rounded-full cursor-pointer">
-                    <img src={user?.avatar} alt="User avatar" />
-                </button>
+                    <span className="font-semibold text-gray-600">{name}</span>
+                    <div className="w-8 rounded-full">
+                        <img src={avatar} alt={name} />
+                    </div>
+                </label>
+                <ul
+                    tabIndex="0"
+                    className="mt-3 p-2 shadow menu bg-white bg-opacity-60 menu-compact dropdown-content rounded-lg w-52"
+                >
+                    <li>
+                        <span
+                            onClick={handleLogout}
+                            className="cursor-pointer text-gray-600 bg-white bg-opacity-60 hover:bg-white px-5 font-semibold py-2 rounded-lg transition-all delay-75"
+                        >
+                            Logout
+                        </span>
+                    </li>
+                </ul>
             </div>
         </div>
     );

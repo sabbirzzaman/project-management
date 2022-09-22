@@ -16,6 +16,14 @@ function App() {
         <>
             <Routes>
                 <Route
+                    path="/"
+                    element={
+                        <AuthRoute>
+                            <Login />
+                        </AuthRoute>
+                    }
+                />
+                <Route
                     path="login"
                     element={
                         <AuthRoute>

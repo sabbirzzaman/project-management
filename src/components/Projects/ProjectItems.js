@@ -35,7 +35,7 @@ const ProjectItems = () => {
                         !isError &&
                         backlogProjects?.length > 0 && (
                             backlogProjects.map((project) => (
-                                <ProjectCard project={project} />
+                                <ProjectCard key={project.id} project={project} />
                             ))
                         )}
                     </ProjectCards>
@@ -51,7 +51,7 @@ const ProjectItems = () => {
                     <ProjectCards>
                         {!isLoading && !isError && readyProjects?.length > 0 ? (
                             readyProjects.map((project) => (
-                                <ProjectCard project={project} />
+                                <ProjectCard key={project.id} project={project} />
                             ))
                         ) : (
                             <p className="text-sm px-2 mt-4">
@@ -67,7 +67,7 @@ const ProjectItems = () => {
                     <ProjectCards>
                         {!isLoading && !isError && doingProjects?.length > 0 ? (
                             doingProjects.map((project) => (
-                                <ProjectCard project={project} />
+                                <ProjectCard key={project.id} project={project} />
                             ))
                         ) : (
                             <p className="text-sm px-2 mt-4">

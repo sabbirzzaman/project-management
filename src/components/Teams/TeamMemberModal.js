@@ -4,6 +4,8 @@ import { useGetUserQuery } from '../../features/users/usersApi';
 import toast from 'react-hot-toast';
 import isValidEmail from '../../utils/isValidEmail';
 import Error from '../common/Error';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const TeamCardModal = ({ id, members, setIsOpen }) => {
     // local state
@@ -48,15 +50,15 @@ const TeamCardModal = ({ id, members, setIsOpen }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        addTeamMember({ id, data: { members: [...members, ...user] } })
+        addTeamMember({ id, data: { members: [...members, ...user] } });
     };
 
     useEffect(() => {
-        if(isSuccess) {
-            setIsOpen(false)
+        if (isSuccess) {
+            setIsOpen(false);
             toast.success('Member added successfully!');
         }
-    }, [isSuccess, setIsOpen])
+    }, [isSuccess, setIsOpen]);
 
     return (
         <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10 cursor-default">
@@ -71,7 +73,7 @@ const TeamCardModal = ({ id, members, setIsOpen }) => {
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <input type="hidden" name="remember" value="true" />
                     <div className="rounded-md shadow-sm -space-y-px">
-                        <div>
+                        <div className="relative">
                             <label htmlFor="email" className="sr-only">
                                 Team title
                             </label>
@@ -85,17 +87,15 @@ const TeamCardModal = ({ id, members, setIsOpen }) => {
                                 placeholder="Email"
                                 onChange={(e) => handleSearch(e.target.value)}
                             />
+                            <button
+                                type="submit"
+                                className="group absolute top-0 h-full right-0 z-10 flex items-center justify-center gap-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-gray-300"
+                                disabled={disabled || isLoading}
+                            >
+                                <span>Add</span>
+                                <FontAwesomeIcon icon={faArrowRight} />
+                            </button>
                         </div>
-                    </div>
-
-                    <div>
-                        <button
-                            type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-gray-300"
-                            disabled={disabled || isLoading}
-                        >
-                            Add member
-                        </button>
                     </div>
 
                     {existingMember?.length > 0 && (

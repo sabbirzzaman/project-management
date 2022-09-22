@@ -86,47 +86,49 @@ const TeamCardModal = ({ setIsOpen }) => {
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <input type="hidden" name="remember" value="true" />
                     <div className="rounded-md shadow-sm -space-y-px">
-                        <div className="flex">
+                        <div className="flex gap-2 mb-2">
                             <input
                                 id="team-name"
                                 name="team"
                                 type="text"
                                 autoComplete="team-name"
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-tl-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
+                                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
                                 placeholder="Team name"
                                 onChange={(e) => handleSearch(e.target.value)}
                             />
-                            <select
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-tr-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
-                                onChange={(e) => setColor(e.target.value)}
-                            >
-                                <option value="red" defaultValue>
-                                    Red
-                                </option>
-                                <option value="green">Green</option>
-                                <option value="yellow">Yellow</option>
-                                <option value="violet">Violet</option>
-                                <option value="pink">Pink</option>
-                                <option value="orange">Orange</option>
-                                <option value="teal">Teal</option>
-                            </select>
+                            <div className='w-full relative items-center'>
+                                <select
+                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
+                                    onChange={(e) => setColor(e.target.value)}
+                                >
+                                    <option value="red" defaultValue>
+                                        Red
+                                    </option>
+                                    <option value="green">Green</option>
+                                    <option value="yellow">Yellow</option>
+                                    <option value="violet">Violet</option>
+                                    <option value="pink">Pink</option>
+                                    <option value="orange">Orange</option>
+                                    <option value="teal">Teal</option>
+                                </select>
+                            </div>
                         </div>
                         <div>
                             <label htmlFor="team-title" className="sr-only">
                                 Team title
                             </label>
-                            <input
+                            <textarea
                                 id="team-title"
                                 name="title"
                                 type="text"
                                 autoComplete="team-title"
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
-                                placeholder="Team title"
+                                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
+                                placeholder="Team description"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
-                            />
+                            ></textarea>
                         </div>
                     </div>
 
