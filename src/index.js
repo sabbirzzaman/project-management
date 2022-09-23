@@ -11,15 +11,15 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <DndProvider backend={HTML5Backend}>
-        <BrowserRouter>
-            <React.StrictMode>
-                <Provider store={store}>
+    <BrowserRouter>
+        <React.StrictMode>
+            <Provider store={store}>
+                <DndProvider backend={HTML5Backend}>
                     <App />
-                </Provider>
-            </React.StrictMode>
-        </BrowserRouter>
-    </DndProvider>
+                </DndProvider>
+            </Provider>
+        </React.StrictMode>
+    </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function
