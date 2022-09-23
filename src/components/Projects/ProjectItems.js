@@ -14,7 +14,7 @@ const ProjectItems = () => {
     const { data: projects } = useGetProjectsQuery(undefined, {
         refetchOnMountOrArgChange: true,
     });
-    const [editProject, { isSuccess }] = useEditProjectMutation();
+    const [editProject] = useEditProjectMutation();
 
     const filterByStatus = (status) => (project) => project.status === status;
 
@@ -93,6 +93,7 @@ const ProjectItems = () => {
                                         project={project}
                                         type={BACKLOG}
                                         index={project.id}
+                                        options={true}
                                     />
                                 ))}
                     </ProjectCards>
@@ -114,6 +115,7 @@ const ProjectItems = () => {
                                         project={project}
                                         type={READY}
                                         index={project.id}
+                                        options={false}
                                     />
                                 ))}
                     </ProjectCards>
@@ -135,6 +137,7 @@ const ProjectItems = () => {
                                         project={project}
                                         type={DOING}
                                         index={project.id}
+                                        options={false}
                                     />
                                 ))}
                     </ProjectCards>
@@ -160,6 +163,7 @@ const ProjectItems = () => {
                                         project={project}
                                         type={REVIEW}
                                         index={project.id}
+                                        options={false}
                                     />
                                 ))}
                     </ProjectCards>
@@ -181,6 +185,7 @@ const ProjectItems = () => {
                                         project={project}
                                         type={BLOCKED}
                                         index={project.id}
+                                        options={false}
                                     />
                                 ))}
                     </ProjectCards>
@@ -202,6 +207,7 @@ const ProjectItems = () => {
                                         project={project}
                                         type={DONE}
                                         index={project.id}
+                                        options={false}
                                     />
                                 ))}
                     </ProjectCards>

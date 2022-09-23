@@ -11,6 +11,23 @@ export const projectsApi = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: data,
             }),
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+                console.log(arg);
+                const result = dispatch(
+                    apiSlice.util.updateQueryData(
+                        'getProjects',
+                        undefined,
+                        (draft) => {
+                            draft.push(arg);
+                        }
+                    )
+                );
+                try {
+                    await queryFulfilled;
+                } catch (err) {
+                    result.undo();
+                }
+            },
         }),
         editProject: builder.mutation({
             query: ({ id, data }) => ({
