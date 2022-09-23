@@ -12,7 +12,6 @@ export const projectsApi = apiSlice.injectEndpoints({
                 body: data,
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-                console.log(arg);
                 const result = dispatch(
                     apiSlice.util.updateQueryData(
                         'getProjects',
@@ -56,6 +55,29 @@ export const projectsApi = apiSlice.injectEndpoints({
                 }
             },
         }),
+        deleteProject: builder.mutation({
+            query: (id) => ({
+                url: `/projects/${id}`,
+                method: 'DELETE',
+            }),
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+                const result = dispatch(
+                    apiSlice.util.updateQueryData(
+                        'getProjects',
+                        undefined,
+                        (draft) => {
+                            console.log(draft)
+                        }
+                    )
+                );
+
+                try {
+                    await queryFulfilled;
+                } catch (err) {
+                    result.undo();
+                }
+            },
+        }),
     }),
 });
 
@@ -63,4 +85,5 @@ export const {
     useAddProjectMutation,
     useGetProjectsQuery,
     useEditProjectMutation,
+    useDeleteProjectMutation,
 } = projectsApi;

@@ -55,7 +55,7 @@ const Navigation = () => {
                     tabIndex="0"
                     className="btn btn-ghost rounded-lg px-3 w-full gap-3 btn-circle avatar hover:bg-gray-200"
                 >
-                    <span className="font-semibold text-gray-600">{name}</span>
+                    <span className="font-semibold text-gray-600 normal-case">{name}</span>
                     <div className="w-8 rounded-full">
                         <img src={avatar} alt={name} />
                     </div>

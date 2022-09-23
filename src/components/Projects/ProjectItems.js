@@ -76,7 +76,7 @@ const ProjectItems = () => {
         <>
             <ProjectsHead />
 
-            <div className="flex flex-grow px-10 mt-4 space-x-6 overflow-auto">
+            <div className="flex flex-grow px-10 mt-4 space-x-6 overflow-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-thumb-rounded-full z-10">
                 <div className="flex flex-col flex-shrink-0 w-72">
                     <ProjectStatus title="Backlog" item={projects?.filter(filterByStatus('backlog')).length} addBtn={true} />
 

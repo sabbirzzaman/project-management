@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import manageColor from '../../utils/manageColor';
 import { useDrag } from 'react-dnd';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisVertical, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { useDeleteProjectMutation } from '../../features/projects/projectsApi';
+import toast from 'react-hot-toast';
 
 const ProjectCard = ({ project, type, index, options }) => {
-    const { avatar, date, color, team, title } = project || {};
+    const { id, avatar, date, color, team, title } = project || {};
+    const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+    const [deleteProject, { isSuccess }] = useDeleteProjectMutation();
 
     const [, dragRef] = useDrag({
         type: type,
@@ -14,6 +20,16 @@ const ProjectCard = ({ project, type, index, options }) => {
 
     const teamColor = manageColor(color);
 
+    const handleDelete = () => {
+        deleteProject(id);
+    };
+
+    useEffect(() => {
+        if (isSuccess) {
+            toast.success('Project deleted successfully!')
+        }
+    }, [isSuccess])
+
     return (
         <>
             <div
@@ -21,16 +37,22 @@ const ProjectCard = ({ project, type, index, options }) => {
                 ref={dragRef}
             >
                 {options && (
-                    <button className="absolute top-0 right-0 items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex">
-                        <svg
-                            className="w-4 h-4 fill-current"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
+                    <div className="absolute top-0 right-0 hidden items-center mt-3 mr-2 group-hover:flex">
+                        <button
+                            className={`text-base transition delay-100 translate-x-[100px] text-gray-700 px-2 py-1 rounded hover:bg-red-100 hover:text-red-600 ${
+                                isOptionsOpen && 'translate-x-[0px]'
+                            }`}
+                            onClick={handleDelete}
                         >
-                            <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                        </svg>
-                    </button>
+                            <FontAwesomeIcon className="" icon={faTrash} />
+                        </button>
+                        <button
+                            onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+                            className="text-base text-gray-500 px-2 py-1 ml-1 rounded hover:bg-gray-200 hover:text-gray-700"
+                        >
+                            <FontAwesomeIcon icon={faEllipsisVertical} />
+                        </button>
+                    </div>
                 )}
                 <span
                     className={`flex items-center h-6 px-3 text-xs font-semibold ${teamColor} rounded-full`}
