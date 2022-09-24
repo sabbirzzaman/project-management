@@ -7,7 +7,7 @@ import Error from '../common/Error';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-const TeamCardModal = ({ id, members, setIsOpen }) => {
+const TeamCardModal = ({ id, members, setIsOpen, setIsOptionsOpen }) => {
     // local state
     const [email, setEmail] = useState('');
     const [skipReq, setSkipReq] = useState(true);
@@ -17,9 +17,9 @@ const TeamCardModal = ({ id, members, setIsOpen }) => {
     const [addTeamMember, { isLoading, isSuccess }] =
         useAddTeamMemberMutation();
 
-    const existingMember = members.filter((member) => member.email === email);
-
-    useEffect(() => {
+        const existingMember = members.filter((member) => member.email === email);
+        
+        useEffect(() => {
         if (user?.length > 0 && existingMember?.length === 0) {
             setDisabled(false);
         } else {
@@ -53,27 +53,49 @@ const TeamCardModal = ({ id, members, setIsOpen }) => {
         addTeamMember({ id, data: { members: [...members, ...user] } });
     };
 
+    const handleModalClose = () => {
+        setIsOpen(false);
+        setIsOptionsOpen(false);
+    };
+
     useEffect(() => {
         if (isSuccess) {
             setIsOpen(false);
+            setIsOptionsOpen(false);
             toast.success('Member added successfully!');
         }
-    }, [isSuccess, setIsOpen]);
+    }, [isSuccess, setIsOpen, setIsOptionsOpen]);
 
     return (
-        <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10 cursor-default">
-            <div
-                onClick={() => setIsOpen(false)}
-                className="absolute w-full h-full bg-slate-900 bg-opacity-60"
-            ></div>
-            <div className="bg-white w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
-                    Add team member!
-                </h3>
+        <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-violet-500 h-full bg-opacity-60 z-10">
+            <div className="absolute w-full h-full bg-slate-900 bg-opacity-60"></div>
+            <div className="bg-[#F9FAFB] w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
+                <div className="flex justify-between border-b pb-4">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
+                        Assign new team member!
+                    </h3>
+                    <button
+                        onClick={handleModalClose}
+                        className="p-2 transition-all hover:bg-gray-200 rounded-lg"
+                    >
+                        <svg
+                            aria-hidden="true"
+                            className="w-5 h-5"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clipRule="evenodd"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <input type="hidden" name="remember" value="true" />
                     <div className="rounded-md shadow-sm -space-y-px">
-                        <div className="relative">
+                        <div className="flex gap-3">
                             <label htmlFor="email" className="sr-only">
                                 Team title
                             </label>
@@ -89,7 +111,7 @@ const TeamCardModal = ({ id, members, setIsOpen }) => {
                             />
                             <button
                                 type="submit"
-                                className="group absolute top-0 h-full right-0 z-10 flex items-center justify-center gap-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-gray-300"
+                                className="group flex items-center justify-center gap-3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-gray-300 disabled:hover:bg-gray-300"
                                 disabled={disabled || isLoading}
                             >
                                 <span>Add</span>

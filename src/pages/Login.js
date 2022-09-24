@@ -1,3 +1,5 @@
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import { useLoginMutation } from '../features/auth/authApi';
 import logo from '../images/logo.png';
@@ -16,16 +18,16 @@ const Login = () => {
     };
 
     return (
-        <div className="grid place-items-center h-screen bg-[#F9FAFB]">
-            <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row-reverse items-center justify-center min-h-screen gap-5 bg-[#F9FAFB] bg-pattern">
+            <div className="sm:min-h-[400px] min-w-[325px] bg-white flex items-center justify-center rounded-lg shadow-lg py-8 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
                     <div>
                         <img
-                            className="mx-auto h-12 w-auto"
+                            className="mx-auto h-14 w-auto"
                             src={logo}
-                            alt="Learn with sumit"
+                            alt="site logo"
                         />
-                        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                        <h2 className="mt-6 text-center text-2xl sm:text-3xl font-extrabold text-gray-900">
                             Sign in to your account
                         </h2>
                     </div>
@@ -80,6 +82,53 @@ const Login = () => {
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+            <div className="sm:min-h-[400px] min-w-[325px] bg-white flex items-center justify-center rounded-lg shadow-lg py-8 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-md w-full text-left space-y-8">
+                    <div className="rounded-md -space-y-px">
+                        <div className="flex justify-between items-center mb-3 px-2">
+                            <h3 className="text-xl font-bold">
+                                Some available users!
+                            </h3>
+                            <div
+                                className="tooltip tooltip-left cursor-pointer flex"
+                                data-tip="You can click on any email or password to skip typing!"
+                            >
+                                <FontAwesomeIcon className='bg-violet-300 text-violet-800 py-1 px-2 rounded' icon={faInfo} />
+                            </div>
+                        </div>
+                        <ul>
+                            <li
+                                onClick={() => setEmail('sztonmoy7@gmail.com')}
+                                className="flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+                            >
+                                <span className="font-semibold">Email:</span>
+                                <span>sztonmoy7@gmail.com</span>
+                            </li>
+                            <li
+                                onClick={() => setEmail('test@test.com')}
+                                className="flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+                            >
+                                <span className="font-semibold">Email:</span>
+                                test@test.com
+                            </li>
+                            <li
+                                onClick={() => setEmail('haha@haha.com')}
+                                className="flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+                            >
+                                <span className="font-semibold">Email:</span>
+                                haha@haha.com
+                            </li>
+                            <li
+                                onClick={() => setPassword('123456')}
+                                className="flex items-center gap-1 py-1 px-2 rounded-lg hover:bg-gray-100 cursor-pointer"
+                            >
+                                <span className="font-semibold">Password:</span>
+                                123456
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

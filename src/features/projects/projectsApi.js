@@ -60,23 +60,25 @@ export const projectsApi = apiSlice.injectEndpoints({
                 url: `/projects/${id}`,
                 method: 'DELETE',
             }),
-            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-                const result = dispatch(
-                    apiSlice.util.updateQueryData(
-                        'getProjects',
-                        undefined,
-                        (draft) => {
-                            console.log(draft)
-                        }
-                    )
-                );
+            // async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+            //     const result = dispatch(
+            //         apiSlice.util.updateQueryData(
+            //             'getProjects',
+            //             undefined,
+            //             (draft) => {
+            //                 draft = draft.filter(
+            //                     (project) => Number(project.id) !== Number(arg)
+            //                 );
+            //             }
+            //         )
+            //     );
 
-                try {
-                    await queryFulfilled;
-                } catch (err) {
-                    result.undo();
-                }
-            },
+            //     try {
+            //         await queryFulfilled;
+            //     } catch (err) {
+            //         result.undo();
+            //     }
+            // },
         }),
     }),
 });

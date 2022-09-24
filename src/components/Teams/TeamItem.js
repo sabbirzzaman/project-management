@@ -1,47 +1,53 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import TeamMemberModal from './TeamMemberModal';
+import manageColor from '../../utils/manageColor';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faAdd,
+    faEllipsisVertical,
+    faTrash,
+} from '@fortawesome/free-solid-svg-icons';
 
 const TeamItem = ({ team }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     const { id, team: teamName, title, color, date, members } = team || {};
 
     // manage colors
-    let teamColor = '';
-    if (color === 'red') {
-        teamColor = 'text-red-600 bg-red-100';
-    } else if (color === 'green') {
-        teamColor = 'text-green-600 bg-green-100';
-    } else if (color === 'yellow') {
-        teamColor = 'text-yellow-600 bg-yellow-100';
-    } else if (color === 'violet') {
-        teamColor = 'text-violet-600 bg-violet-100';
-    } else if (color === 'pink') {
-        teamColor = 'text-pink-600 bg-pink-100';
-    } else if (color === 'orange') {
-        teamColor = 'text-orange-600 bg-orange-100';
-    } else if (color === 'teal') {
-        teamColor = 'text-teal-600 bg-teal-100';
-    }
+    const teamColor = manageColor(color);
+
+    const handleDelete = () => {};
 
     return (
         <div
             className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
             draggable={!isOpen}
         >
-            <button
-                onClick={() => setIsOpen(true)}
-                className="absolute top-0 right-0 items-center justify-center hidden w-5 h-5 mt-3 mr-2 text-gray-500 rounded hover:bg-gray-200 hover:text-gray-700 group-hover:flex"
-            >
-                <svg
-                    className="w-4 h-4 fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
+            <div className="absolute top-0 right-0 hidden items-center mt-3 mr-2 group-hover:flex">
+                <button
+                    className={`text-base transition delay-75 ease-in-out scale-0 text-gray-700 px-2 py-1 rounded hover:bg-violet-100 hover:text-violet-600 ${
+                        isOptionsOpen && 'scale-90'
+                    }`}
+                    onClick={handleDelete}
                 >
-                    <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
-                </svg>
-            </button>
+                    <FontAwesomeIcon icon={faTrash} />
+                </button>
+                <button
+                    className={`text-base transition delay-75 ease-in-out scale-0 text-gray-700 px-2 py-1 rounded hover:bg-violet-100 hover:text-violet-600 ${
+                        isOptionsOpen && 'scale-90'
+                    }`}
+                    onClick={() => setIsOpen(true)}
+                >
+                    <FontAwesomeIcon icon={faAdd} />
+                </button>
+                <button
+                    onClick={() => setIsOptionsOpen(!isOptionsOpen)}
+                    className="text-base text-gray-500 px-2 py-1 ml-1 rounded hover:bg-gray-200 hover:text-gray-700"
+                >
+                    <FontAwesomeIcon icon={faEllipsisVertical} />
+                </button>
+            </div>
             <span
                 className={`flex items-center h-6 px-3 text-xs font-semibold ${teamColor} rounded-full`}
             >
@@ -82,6 +88,7 @@ const TeamItem = ({ team }) => {
                     id={id}
                     members={members}
                     setIsOpen={setIsOpen}
+                    setIsOptionsOpen={setIsOptionsOpen}
                 />
             )}
         </div>

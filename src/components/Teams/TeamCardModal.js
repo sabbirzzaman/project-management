@@ -1,3 +1,5 @@
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
@@ -74,19 +76,32 @@ const TeamCardModal = ({ setIsOpen }) => {
     }, [isSuccess, setIsOpen]);
 
     return (
-        <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10">
-            <div
-                onClick={() => setIsOpen(false)}
-                className="absolute w-full h-full bg-slate-900 bg-opacity-60"
-            ></div>
-            <div className="bg-white w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
-                    Add new team!
-                </h3>
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-                    <input type="hidden" name="remember" value="true" />
-                    <div className="rounded-md shadow-sm -space-y-px">
-                        <div className="flex gap-2 mb-2">
+        <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-violet-500 h-full bg-opacity-60 z-10">
+            <div className="absolute w-full h-full bg-slate-900 bg-opacity-60"></div>
+            <div className="relative bg-[#F9FAFB] w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
+                <div className="flex justify-between border-b pb-4">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
+                        Add new team!
+                    </h3>
+                    <button onClick={() => setIsOpen(false)} className="p-2 transition-all hover:bg-gray-200 rounded-lg">
+                        <svg
+                            aria-hidden="true"
+                            className="w-5 h-5"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clipRule="evenodd"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+                <form className="mt-4 space-y-6" onSubmit={handleSubmit}>
+                    <div className="flex flex-col gap-3">
+                        <div>
                             <input
                                 id="team-name"
                                 name="team"
@@ -97,27 +112,8 @@ const TeamCardModal = ({ setIsOpen }) => {
                                 placeholder="Team name"
                                 onChange={(e) => handleSearch(e.target.value)}
                             />
-                            <div className='w-full relative items-center'>
-                                <select
-                                    className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-violet-500 focus:border-violet-500 focus:z-10 sm:text-sm"
-                                    onChange={(e) => setColor(e.target.value)}
-                                >
-                                    <option value="red" defaultValue>
-                                        Red
-                                    </option>
-                                    <option value="green">Green</option>
-                                    <option value="yellow">Yellow</option>
-                                    <option value="violet">Violet</option>
-                                    <option value="pink">Pink</option>
-                                    <option value="orange">Orange</option>
-                                    <option value="teal">Teal</option>
-                                </select>
-                            </div>
                         </div>
                         <div>
-                            <label htmlFor="team-title" className="sr-only">
-                                Team title
-                            </label>
                             <textarea
                                 id="team-title"
                                 name="title"
@@ -129,6 +125,38 @@ const TeamCardModal = ({ setIsOpen }) => {
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                             ></textarea>
+                        </div>
+                        <div className="flex justify-center py-4">
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => setColor('red')}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-red-600 ${color === 'red' && 'ring-red-300'}`}
+                                ></button>
+                                <button
+                                    onClick={() => setColor('green')}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-green-600 ${color === 'green' && 'ring-green-300'}`}
+                                ></button>
+                                <button
+                                    onClick={() => setColor('yellow')}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-yellow-600 ${color === 'yellow' && 'ring-yellow-300'}`}
+                                ></button>
+                                <button
+                                    onClick={() => setColor('violet')}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-violet-600 ${color === 'violet' && 'ring-violet-300'}`}
+                                ></button>
+                                <button
+                                    onClick={() => setColor('pink')}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-pink-600 ${color === 'pink' && 'ring-pink-300'}`}
+                                ></button>
+                                <button
+                                    onClick={() => setColor('orange')}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-orange-600 ${color === 'orange' && 'ring-orange-300'}`}
+                                ></button>
+                                <button
+                                    onClick={() => setColor('teal')}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-teal-600 ${color === 'teal' && 'ring-teal-300'}`}
+                                ></button>
+                            </div>
                         </div>
                     </div>
 

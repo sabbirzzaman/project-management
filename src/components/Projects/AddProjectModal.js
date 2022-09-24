@@ -71,15 +71,32 @@ const AddProjectModal = ({ setModalOpen }) => {
     }, [isSuccess, setModalOpen]);
 
     return (
-        <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-slate-900 h-full bg-opacity-60 z-10">
-            <div
-                onClick={() => setModalOpen(false)}
-                className="absolute w-full h-full bg-slate-900 bg-opacity-60"
-            ></div>
-            <div className="bg-white w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
-                <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
-                    Add new project!
-                </h3>
+        <div className="fixed top-0 left-0 w-full flex items-center justify-center bg-violet-500 h-full bg-opacity-60 z-10">
+            <div className="absolute w-full h-full bg-slate-900 bg-opacity-60"></div>
+            <div className="bg-[#F9FAFB] w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
+            <div className="flex justify-between border-b pb-4">
+                    <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
+                        Assign new team member!
+                    </h3>
+                    <button
+                        onClick={() => setModalOpen(false)}
+                        className="p-2 transition-all hover:bg-gray-200 rounded-lg"
+                    >
+                        <svg
+                            aria-hidden="true"
+                            className="w-5 h-5"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clipRule="evenodd"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <input type="hidden" name="remember" value="true" />
                     <div className="rounded-md shadow-sm -space-y-px">

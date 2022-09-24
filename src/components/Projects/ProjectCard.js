@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisVertical, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useDeleteProjectMutation } from '../../features/projects/projectsApi';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 const ProjectCard = ({ project, type, index, options }) => {
     const { id, avatar, date, color, team, title } = project || {};
@@ -18,6 +19,8 @@ const ProjectCard = ({ project, type, index, options }) => {
         collect: (monitor) => ({ isDragging: !!monitor.isDragging() }),
     });
 
+    const { search } = useSelector((state) => state.search) || {};
+
     const teamColor = manageColor(color);
 
     const handleDelete = () => {
@@ -26,21 +29,25 @@ const ProjectCard = ({ project, type, index, options }) => {
 
     useEffect(() => {
         if (isSuccess) {
-            toast.success('Project deleted successfully!')
+            toast.success('Project deleted successfully!');
         }
-    }, [isSuccess])
+    }, [isSuccess]);
 
     return (
         <>
             <div
-                className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
+                className={`relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100 ${
+                    search &&
+                    title.toLowerCase().includes(search.toLowerCase()) &&
+                    'ring ring-violet-400'
+                }`}
                 ref={dragRef}
             >
                 {options && (
                     <div className="absolute top-0 right-0 hidden items-center mt-3 mr-2 group-hover:flex">
                         <button
-                            className={`text-base transition delay-100 translate-x-[100px] text-gray-700 px-2 py-1 rounded hover:bg-red-100 hover:text-red-600 ${
-                                isOptionsOpen && 'translate-x-[0px]'
+                            className={`text-base transition delay-75 ease-in-out scale-0 text-gray-700 px-2 py-1 rounded hover:bg-violet-100 hover:text-violet-600 ${
+                                isOptionsOpen && 'scale-90'
                             }`}
                             onClick={handleDelete}
                         >
