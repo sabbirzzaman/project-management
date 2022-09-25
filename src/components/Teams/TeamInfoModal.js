@@ -1,4 +1,7 @@
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import { Oval } from 'react-loader-spinner';
 import { useGetTeamInfoQuery } from '../../features/teams/teamsApi';
 
 const TeamInfoModal = ({ id, setIsInfoOpen }) => {
@@ -6,14 +9,42 @@ const TeamInfoModal = ({ id, setIsInfoOpen }) => {
 
     let content;
     if (isLoading) {
-        content = <p>Loading...</p>;
+        content = (
+            <div className="relative bg-[#F9FAFB] w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
+                <div className="flex justify-center items-center">
+                    <Oval
+                        height={70}
+                        width={70}
+                        color="#5b21b6"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                        visible={true}
+                        ariaLabel="oval-loading"
+                        secondaryColor="#ddd6fe"
+                        strokeWidth={4}
+                        strokeWidthSecondary={3}
+                    />
+                </div>
+            </div>
+        );
     } else if (!isLoading && isError) {
-        content = <p>Something went wrong!</p>;
+        content = (
+            <div className="relative bg-[#F9FAFB] w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
+                <div className="flex flex-col justify-center items-center">
+                    <FontAwesomeIcon className='text-2xl mb-2' icon={faCircleExclamation} />
+                    <p className='text-xl'>Something went wrong!</p>
+                </div>
+            </div>
+        );
     } else if (!isLoading && !isError && data.id) {
         const { team, email, members } = data || {};
 
-        const teamCreator = members.find(member => member.email === email);
-        const {avatar: creatorAvatar, name: creatorName, email: creatorEmail} = teamCreator || {};
+        const teamCreator = members.find((member) => member.email === email);
+        const {
+            avatar: creatorAvatar,
+            name: creatorName,
+            email: creatorEmail,
+        } = teamCreator || {};
 
         content = (
             <div className="relative bg-[#F9FAFB] w-11/12 md:w-2/5 sm:w-3/5 rounded-lg p-8 z-10">
@@ -47,21 +78,19 @@ const TeamInfoModal = ({ id, setIsInfoOpen }) => {
                             Team creator
                         </h4>
                         <div className="flex justify-center">
-                                <div
-                                    className="flex items-center gap-3 transition-all ease-in-out hover:bg-violet-200 rounded-lg py-1 px-2"
-                                >
-                                    <img
-                                        className="w-14"
-                                        src={creatorAvatar}
-                                        alt={creatorName}
-                                    />
-                                    <div className="flex flex-col">
-                                        <span className="font-bold">
-                                            {creatorName}
-                                        </span>
-                                        <span>{creatorEmail}</span>
-                                    </div>
+                            <div className="flex items-center gap-3 transition-all ease-in-out hover:bg-violet-200 rounded-lg py-1 px-2">
+                                <img
+                                    className="w-14"
+                                    src={creatorAvatar}
+                                    alt={creatorName}
+                                />
+                                <div className="flex flex-col">
+                                    <span className="font-bold">
+                                        {creatorName}
+                                    </span>
+                                    <span>{creatorEmail}</span>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
