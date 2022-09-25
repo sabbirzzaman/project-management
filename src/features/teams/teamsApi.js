@@ -62,6 +62,19 @@ export const teamsApi = apiSlice.injectEndpoints({
                             }
                         )
                     );
+
+                    dispatch(
+                        apiSlice.util.updateQueryData(
+                            'getTeamInfo',
+                            id,
+                            (draft) => {
+                                const team = draft.find(
+                                    (t) => Number(t.id) === Number(id)
+                                );
+                                team.members = data.members;
+                            }
+                        )
+                    );
                 } catch (err) {}
             },
         }),
