@@ -78,7 +78,13 @@ const ProjectItems = () => {
 
             <div className="flex flex-grow px-10 mt-4 space-x-6 overflow-auto scrollbar-thin scrollbar-thumb-gray-500 scrollbar-track-transparent scrollbar-thumb-rounded-full z-10">
                 <div className="flex flex-col flex-shrink-0 w-72">
-                    <ProjectStatus title="Backlog" item={projects?.filter(filterByStatus('backlog')).length} addBtn={true} />
+                    <ProjectStatus
+                        title="Backlog"
+                        item={
+                            projects?.filter(filterByStatus('backlog')).length
+                        }
+                        addBtn={true}
+                    />
 
                     <ProjectCards
                         isOver={isBacklogOver}
@@ -86,6 +92,8 @@ const ProjectItems = () => {
                     >
                         {projects?.length > 0 &&
                             projects
+                                .slice()
+                                .reverse()
                                 .filter(filterByStatus('backlog'))
                                 .map((project) => (
                                     <ProjectCard
@@ -100,7 +108,11 @@ const ProjectItems = () => {
                 </div>
 
                 <div className="flex flex-col flex-shrink-0 w-72">
-                    <ProjectStatus title="Ready" item={projects?.filter(filterByStatus('ready')).length} addBtn={false} />
+                    <ProjectStatus
+                        title="Ready"
+                        item={projects?.filter(filterByStatus('ready')).length}
+                        addBtn={false}
+                    />
 
                     <ProjectCards
                         isOver={isReadyOver}
@@ -122,7 +134,11 @@ const ProjectItems = () => {
                 </div>
 
                 <div className="flex flex-col flex-shrink-0 w-72">
-                    <ProjectStatus title="Doing" item={projects?.filter(filterByStatus('doing')).length} addBtn={false} />
+                    <ProjectStatus
+                        title="Doing"
+                        item={projects?.filter(filterByStatus('doing')).length}
+                        addBtn={false}
+                    />
 
                     <ProjectCards
                         isOver={isDoingOver}
@@ -170,7 +186,13 @@ const ProjectItems = () => {
                 </div>
 
                 <div className="flex flex-col flex-shrink-0 w-72">
-                    <ProjectStatus title="Blocked" item={projects?.filter(filterByStatus('blocked')).length} addBtn={false} />
+                    <ProjectStatus
+                        title="Blocked"
+                        item={
+                            projects?.filter(filterByStatus('blocked')).length
+                        }
+                        addBtn={false}
+                    />
 
                     <ProjectCards
                         isOver={isBlockedOver}
@@ -192,7 +214,11 @@ const ProjectItems = () => {
                 </div>
 
                 <div className="flex flex-col flex-shrink-0 w-72">
-                    <ProjectStatus title="Done" item={projects?.filter(filterByStatus('done')).length} addBtn={false} />
+                    <ProjectStatus
+                        title="Done"
+                        item={projects?.filter(filterByStatus('done')).length}
+                        addBtn={false}
+                    />
 
                     <ProjectCards
                         isOver={isDoneOver}

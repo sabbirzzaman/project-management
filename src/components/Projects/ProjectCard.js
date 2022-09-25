@@ -10,11 +10,14 @@ import { useSelector } from 'react-redux';
 import DeleteModal from '../common/DeleteModal';
 
 const ProjectCard = ({ project, type, index, options }) => {
-    const { id, avatar, date, color, team, title } = project || {};
+    const { id, avatar, date, color, team, title, email } = project || {};
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false);
+    const [isNotUser, setIsNotUser] = useState(false);
 
     const [deleteProject, { isSuccess }] = useDeleteProjectMutation();
+    const { user } = useSelector((state) => state.auth) || {};
+    const { email: userEmail } = user || {};
 
     const [, dragRef] = useDrag({
         type: type,
@@ -29,6 +32,12 @@ const ProjectCard = ({ project, type, index, options }) => {
     const deleteHandler = () => {
         deleteProject(id);
     };
+
+    useEffect(() => {
+        if (email !== userEmail) {
+            setIsNotUser(true);
+        }
+    }, [email, userEmail]);
 
     useEffect(() => {
         if (isSuccess) {
@@ -101,6 +110,7 @@ const ProjectCard = ({ project, type, index, options }) => {
                     deleteHandler={deleteHandler}
                     setDeleteModal={setDeleteModal}
                     message="Are you sure you want to delete this project?"
+                    isNotUser={isNotUser}
                 />
             )}
         </>

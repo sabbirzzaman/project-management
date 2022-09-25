@@ -85,7 +85,7 @@ const Navigation = () => {
                             {name}
                         </span>
                         <div className="w-8 rounded-full">
-                            <img src={avatar} alt={name} />
+                            <img className='rounded-full' src={avatar} alt={name} />
                         </div>
                     </div>
                 </div>

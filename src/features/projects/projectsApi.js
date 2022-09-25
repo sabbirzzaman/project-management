@@ -12,20 +12,22 @@ export const projectsApi = apiSlice.injectEndpoints({
                 body: data,
             }),
             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-                const result = dispatch(
-                    apiSlice.util.updateQueryData(
-                        'getProjects',
-                        undefined,
-                        (draft) => {
-                            draft.push(arg);
-                        }
-                    )
-                );
                 try {
-                    await queryFulfilled;
-                } catch (err) {
-                    result.undo();
-                }
+                    const { data } = (await queryFulfilled) || {};
+                    const { id } = data || {};
+
+                    if (id) {
+                        dispatch(
+                            apiSlice.util.updateQueryData(
+                                'getProjects',
+                                undefined,
+                                (draft) => {
+                                    draft.push({...arg, id});
+                                }
+                            )
+                        );
+                    }
+                } catch (err) {}
             },
         }),
         editProject: builder.mutation({

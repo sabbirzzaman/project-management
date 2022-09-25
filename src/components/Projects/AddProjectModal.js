@@ -59,7 +59,7 @@ const AddProjectModal = ({ setModalOpen }) => {
             title,
             email,
             avatar,
-            date: Date.now(),
+            date: new Date().getTime(),
         });
     };
 

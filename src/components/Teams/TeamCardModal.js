@@ -61,7 +61,7 @@ const TeamCardModal = ({ setIsOpen }) => {
             title,
             color,
             email,
-            date: Date.now(),
+            date: new Date().getTime(),
             members: [user],
         });
     };
@@ -132,50 +132,50 @@ const TeamCardModal = ({ setIsOpen }) => {
                                 <button
                                     type="button"
                                     onClick={() => setColor('red')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-red-600 ${
-                                        color === 'red' && 'ring-red-300'
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-red-300 ${
+                                        color === 'red' && 'ring-red-600'
                                     }`}
                                 ></button>
                                 <button
                                     type="button"
                                     onClick={() => setColor('green')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-green-600 ${
-                                        color === 'green' && 'ring-green-300'
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-green-300 ${
+                                        color === 'green' && 'ring-green-600'
                                     }`}
                                 ></button>
                                 <button
                                     type="button"
                                     onClick={() => setColor('yellow')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-yellow-600 ${
-                                        color === 'yellow' && 'ring-yellow-300'
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-yellow-300 ${
+                                        color === 'yellow' && 'ring-yellow-600'
                                     }`}
                                 ></button>
                                 <button
                                     type="button"
                                     onClick={() => setColor('violet')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-violet-600 ${
-                                        color === 'violet' && 'ring-violet-300'
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-violet-300 ${
+                                        color === 'violet' && 'ring-violet-600'
                                     }`}
                                 ></button>
                                 <button
                                     type="button"
                                     onClick={() => setColor('pink')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-pink-600 ${
-                                        color === 'pink' && 'ring-pink-300'
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-pink-300 ${
+                                        color === 'pink' && 'ring-pink-600'
                                     }`}
                                 ></button>
                                 <button
                                     type="button"
                                     onClick={() => setColor('orange')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-orange-600 ${
-                                        color === 'orange' && 'ring-orange-300'
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-orange-300 ${
+                                        color === 'orange' && 'ring-orange-600'
                                     }`}
                                 ></button>
                                 <button
                                     type="button"
                                     onClick={() => setColor('teal')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-teal-600 ${
-                                        color === 'teal' && 'ring-teal-300'
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-teal-300 ${
+                                        color === 'teal' && 'ring-teal-600'
                                     }`}
                                 ></button>
                             </div>
@@ -185,7 +185,7 @@ const TeamCardModal = ({ setIsOpen }) => {
                     <div>
                         <button
                             type="submit"
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-gray-300"
+                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-violet-600 hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-500 disabled:bg-gray-300 disabled:hover:bg-gray-300"
                             disabled={disabled || isLoading}
                         >
                             Add team
