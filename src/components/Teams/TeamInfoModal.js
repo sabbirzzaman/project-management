@@ -5,7 +5,7 @@ import { Oval } from 'react-loader-spinner';
 import { useGetTeamInfoQuery } from '../../features/teams/teamsApi';
 
 const TeamInfoModal = ({ id, setIsInfoOpen }) => {
-    const { data, isLoading, isError } = useGetTeamInfoQuery(id) || {};
+    const { data, isLoading, isError } = useGetTeamInfoQuery(id, {refetchOnMountOrArgChange: true}) || {};
 
     let content;
     if (isLoading) {
