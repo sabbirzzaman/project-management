@@ -6,26 +6,42 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faAdd,
     faEllipsisVertical,
+    faEye,
     faTrash,
 } from '@fortawesome/free-solid-svg-icons';
+import { useSelector } from 'react-redux';
+import { useDeleteTeamMutation } from '../../features/teams/teamsApi';
+import TeamInfoModal from './TeamInfoModal';
 
 const TeamItem = ({ team }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+    const [isInfoOpen, setIsInfoOpen] = useState(false);
+    const [deleteTeam] = useDeleteTeamMutation();
+    const { user } = useSelector((state) => state.auth) || {};
+    const { email } = user || {};
     const { id, team: teamName, title, color, date, members } = team || {};
 
     // manage colors
     const teamColor = manageColor(color);
 
-    const handleDelete = () => {};
+    const handleDelete = () => {
+        deleteTeam({ id, email });
+    };
 
     return (
         <div
             className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
-            draggable={!isOpen}
         >
             <div className="absolute top-0 right-0 hidden items-center mt-3 mr-2 group-hover:flex">
                 <button
+                    className={`text-base transition delay-75 ease-in-out scale-0 text-gray-700 px-2 py-1 rounded hover:bg-violet-100 hover:text-violet-600 ${
+                        isOptionsOpen && 'scale-90'
+                    }`}
+                    onClick={() => setIsInfoOpen(true)}
+                >
+                    <FontAwesomeIcon icon={faEye} />
+                </button><button
                     className={`text-base transition delay-75 ease-in-out scale-0 text-gray-700 px-2 py-1 rounded hover:bg-violet-100 hover:text-violet-600 ${
                         isOptionsOpen && 'scale-90'
                     }`}
@@ -89,6 +105,12 @@ const TeamItem = ({ team }) => {
                     members={members}
                     setIsOpen={setIsOpen}
                     setIsOptionsOpen={setIsOptionsOpen}
+                />
+            )}
+            {isInfoOpen && (
+                <TeamInfoModal
+                    id={id}
+                    setIsInfoOpen={setIsInfoOpen}
                 />
             )}
         </div>
