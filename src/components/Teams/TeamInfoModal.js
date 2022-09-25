@@ -10,7 +10,7 @@ const TeamInfoModal = ({ id, setIsInfoOpen }) => {
     } else if (!isLoading && isError) {
         content = <p>Something went wrong!</p>;
     } else if (!isLoading && !isError && data.id) {
-        const { team, title, email, members } = data || {};
+        const { team, email, members } = data || {};
 
         const teamCreator = members.find(member => member.email === email);
         const {avatar: creatorAvatar, name: creatorName, email: creatorEmail} = teamCreator || {};

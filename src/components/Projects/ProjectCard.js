@@ -7,10 +7,13 @@ import { faEllipsisVertical, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useDeleteProjectMutation } from '../../features/projects/projectsApi';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
+import DeleteModal from '../common/DeleteModal';
 
 const ProjectCard = ({ project, type, index, options }) => {
     const { id, avatar, date, color, team, title } = project || {};
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
+
     const [deleteProject, { isSuccess }] = useDeleteProjectMutation();
 
     const [, dragRef] = useDrag({
@@ -23,7 +26,7 @@ const ProjectCard = ({ project, type, index, options }) => {
 
     const teamColor = manageColor(color);
 
-    const handleDelete = () => {
+    const deleteHandler = () => {
         deleteProject(id);
     };
 
@@ -49,9 +52,9 @@ const ProjectCard = ({ project, type, index, options }) => {
                             className={`text-base transition delay-75 ease-in-out scale-0 text-gray-700 px-2 py-1 rounded hover:bg-violet-100 hover:text-violet-600 ${
                                 isOptionsOpen && 'scale-90'
                             }`}
-                            onClick={handleDelete}
+                            onClick={() => setDeleteModal(true)}
                         >
-                            <FontAwesomeIcon className="" icon={faTrash} />
+                            <FontAwesomeIcon icon={faTrash} />
                         </button>
                         <button
                             onClick={() => setIsOptionsOpen(!isOptionsOpen)}
@@ -93,6 +96,13 @@ const ProjectCard = ({ project, type, index, options }) => {
                     />
                 </div>
             </div>
+            {deleteModal && (
+                <DeleteModal
+                    deleteHandler={deleteHandler}
+                    setDeleteModal={setDeleteModal}
+                    message="Are you sure you want to delete this project?"
+                />
+            )}
         </>
     );
 };

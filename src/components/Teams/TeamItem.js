@@ -12,12 +12,18 @@ import {
 import { useSelector } from 'react-redux';
 import { useDeleteTeamMutation } from '../../features/teams/teamsApi';
 import TeamInfoModal from './TeamInfoModal';
+import DeleteModal from '../common/DeleteModal';
 
 const TeamItem = ({ team }) => {
+    // local states
     const [isOpen, setIsOpen] = useState(false);
     const [isOptionsOpen, setIsOptionsOpen] = useState(false);
     const [isInfoOpen, setIsInfoOpen] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
+
+    // delete api
     const [deleteTeam] = useDeleteTeamMutation();
+
     const { user } = useSelector((state) => state.auth) || {};
     const { email } = user || {};
     const { id, team: teamName, title, color, date, members } = team || {};
@@ -25,14 +31,12 @@ const TeamItem = ({ team }) => {
     // manage colors
     const teamColor = manageColor(color);
 
-    const handleDelete = () => {
+    const deleteHandler = () => {
         deleteTeam({ id, email });
     };
 
     return (
-        <div
-            className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100"
-        >
+        <div className="relative flex flex-col items-start p-4 mt-3 bg-white rounded-lg cursor-pointer bg-opacity-90 group hover:bg-opacity-100">
             <div className="absolute top-0 right-0 hidden items-center mt-3 mr-2 group-hover:flex">
                 <button
                     className={`text-base transition delay-75 ease-in-out scale-0 text-gray-700 px-2 py-1 rounded hover:bg-violet-100 hover:text-violet-600 ${
@@ -41,11 +45,12 @@ const TeamItem = ({ team }) => {
                     onClick={() => setIsInfoOpen(true)}
                 >
                     <FontAwesomeIcon icon={faEye} />
-                </button><button
+                </button>
+                <button
                     className={`text-base transition delay-75 ease-in-out scale-0 text-gray-700 px-2 py-1 rounded hover:bg-violet-100 hover:text-violet-600 ${
                         isOptionsOpen && 'scale-90'
                     }`}
-                    onClick={handleDelete}
+                    onClick={() => setDeleteModal(true)}
                 >
                     <FontAwesomeIcon icon={faTrash} />
                 </button>
@@ -108,9 +113,13 @@ const TeamItem = ({ team }) => {
                 />
             )}
             {isInfoOpen && (
-                <TeamInfoModal
-                    id={id}
-                    setIsInfoOpen={setIsInfoOpen}
+                <TeamInfoModal id={id} setIsInfoOpen={setIsInfoOpen} />
+            )}
+            {deleteModal && (
+                <DeleteModal
+                    deleteHandler={deleteHandler}
+                    setDeleteModal={setDeleteModal}
+                    message="Are you sure you want to delete this team?"
                 />
             )}
         </div>

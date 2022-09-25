@@ -81,7 +81,10 @@ const TeamCardModal = ({ setIsOpen }) => {
                     <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-center">
                         Add new team!
                     </h3>
-                    <button onClick={() => setIsOpen(false)} className="p-2 transition-all hover:bg-gray-200 rounded-lg">
+                    <button
+                        onClick={() => setIsOpen(false)}
+                        className="p-2 transition-all hover:bg-gray-200 rounded-lg"
+                    >
                         <svg
                             aria-hidden="true"
                             className="w-5 h-5"
@@ -127,32 +130,53 @@ const TeamCardModal = ({ setIsOpen }) => {
                         <div className="flex justify-center py-4">
                             <div className="flex gap-2">
                                 <button
+                                    type="button"
                                     onClick={() => setColor('red')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-red-600 ${color === 'red' && 'ring-red-300'}`}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-red-600 ${
+                                        color === 'red' && 'ring-red-300'
+                                    }`}
                                 ></button>
                                 <button
+                                    type="button"
                                     onClick={() => setColor('green')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-green-600 ${color === 'green' && 'ring-green-300'}`}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-green-600 ${
+                                        color === 'green' && 'ring-green-300'
+                                    }`}
                                 ></button>
                                 <button
+                                    type="button"
                                     onClick={() => setColor('yellow')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-yellow-600 ${color === 'yellow' && 'ring-yellow-300'}`}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-yellow-600 ${
+                                        color === 'yellow' && 'ring-yellow-300'
+                                    }`}
                                 ></button>
                                 <button
+                                    type="button"
                                     onClick={() => setColor('violet')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-violet-600 ${color === 'violet' && 'ring-violet-300'}`}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-violet-600 ${
+                                        color === 'violet' && 'ring-violet-300'
+                                    }`}
                                 ></button>
                                 <button
+                                    type="button"
                                     onClick={() => setColor('pink')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-pink-600 ${color === 'pink' && 'ring-pink-300'}`}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-pink-600 ${
+                                        color === 'pink' && 'ring-pink-300'
+                                    }`}
                                 ></button>
                                 <button
+                                    type="button"
                                     onClick={() => setColor('orange')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-orange-600 ${color === 'orange' && 'ring-orange-300'}`}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-orange-600 ${
+                                        color === 'orange' && 'ring-orange-300'
+                                    }`}
                                 ></button>
                                 <button
+                                    type="button"
                                     onClick={() => setColor('teal')}
-                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-teal-600 ${color === 'teal' && 'ring-teal-300'}`}
+                                    className={`h-8 w-8 rounded-full ring ring-transparent bg-teal-600 ${
+                                        color === 'teal' && 'ring-teal-300'
+                                    }`}
                                 ></button>
                             </div>
                         </div>
