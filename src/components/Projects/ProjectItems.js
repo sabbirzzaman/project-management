@@ -120,6 +120,8 @@ const ProjectItems = () => {
                     >
                         {projects?.length > 0 &&
                             projects
+                                .slice()
+                                .reverse()
                                 .filter(filterByStatus('ready'))
                                 .map((project) => (
                                     <ProjectCard
@@ -146,6 +148,8 @@ const ProjectItems = () => {
                     >
                         {projects?.length > 0 &&
                             projects
+                                .slice()
+                                .reverse()
                                 .filter(filterByStatus('doing'))
                                 .map((project) => (
                                     <ProjectCard
@@ -172,6 +176,8 @@ const ProjectItems = () => {
                     >
                         {projects?.length > 0 &&
                             projects
+                                .slice()
+                                .reverse()
                                 .filter(filterByStatus('review'))
                                 .map((project) => (
                                     <ProjectCard
@@ -200,6 +206,8 @@ const ProjectItems = () => {
                     >
                         {projects?.length > 0 &&
                             projects
+                                .slice()
+                                .reverse()
                                 .filter(filterByStatus('blocked'))
                                 .map((project) => (
                                     <ProjectCard
@@ -226,6 +234,8 @@ const ProjectItems = () => {
                     >
                         {projects?.length > 0 &&
                             projects
+                                .slice()
+                                .reverse()
                                 .filter(filterByStatus('done'))
                                 .map((project) => (
                                     <ProjectCard
