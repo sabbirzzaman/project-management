@@ -1,6 +1,7 @@
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import { Oval } from 'react-loader-spinner';
 import { useLoginMutation } from '../features/auth/authApi';
 import logo from '../images/logo.png';
 
@@ -10,14 +11,29 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     // auth api
-    const [login] = useLoginMutation();
+    const [login, { isLoading }] = useLoginMutation();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         login({ email, password });
     };
 
-    return (
+    return !isLoading ? (
+        <div className="h-screen flex bg-violet-100 items-center justify-center">
+            <Oval
+                height={50}
+                width={50}
+                color="#5b21b6"
+                wrapperStyle={{}}
+                wrapperClass=""
+                visible={true}
+                ariaLabel="oval-loading"
+                secondaryColor="#ddd6fe"
+                strokeWidth={4}
+                strokeWidthSecondary={3}
+            />
+        </div>
+    ) : (
         <div className="flex flex-col sm:flex-row-reverse items-center justify-center min-h-screen gap-5 bg-[#F9FAFB] bg-pattern">
             <div className="sm:min-h-[400px] min-w-[325px] bg-white flex items-center justify-center rounded-lg shadow-lg py-8 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
@@ -95,7 +111,10 @@ const Login = () => {
                                 className="tooltip tooltip-left cursor-pointer flex"
                                 data-tip="You can click on any email or password to skip typing!"
                             >
-                                <FontAwesomeIcon className='bg-violet-300 text-violet-800 py-1 px-2 rounded' icon={faInfo} />
+                                <FontAwesomeIcon
+                                    className="bg-violet-300 text-violet-800 py-1 px-2 rounded"
+                                    icon={faInfo}
+                                />
                             </div>
                         </div>
                         <ul>
