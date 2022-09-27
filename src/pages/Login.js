@@ -18,7 +18,7 @@ const Login = () => {
         login({ email, password });
     };
 
-    return !isLoading ? (
+    return isLoading ? (
         <div className="h-screen flex bg-violet-100 items-center justify-center">
             <Oval
                 height={50}
